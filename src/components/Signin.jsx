@@ -17,12 +17,12 @@ export const Signin = () => {
   };
   return (
     <Box
-      //   display={"flex"}
-      //   justifyContent={"center"}
-      //   flexDirection={"column"}
-      //   alignItems={"center"}
-      //   height={"100%"}
-      //   boxShadow={(0, 0, "12px", "4px", "secondary")}
+      display={"flex"}
+      justifyContent={"center"}
+      flexDirection={"column"}
+      alignItems={"center"}
+      height={"100%"}
+      boxShadow={(0, 0, "12px", "4px", "secondary")}
       sx={{
         alignItems: "center",
         justifyContent: "center",

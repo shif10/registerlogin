@@ -1,6 +1,6 @@
 import { Box, Typography } from "@mui/material";
 import React from "react";
-export const Home = () => {
+export const Home = ({ user }) => {
   return (
     <Box
       sx={{
@@ -12,7 +12,7 @@ export const Home = () => {
         color: "secondary",
       }}
     >
-      <Typography>Hello</Typography>
+      <Typography>Hello {user.name}</Typography>
     </Box>
   );
 };

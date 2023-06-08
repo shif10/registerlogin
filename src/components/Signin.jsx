@@ -3,17 +3,34 @@ import Grid from "@mui/material/Grid/Grid";
 import TextField from "@mui/material/TextField/TextField";
 import { Box, Button, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
-export const Signin = () => {
+export const Signin = ({ setLoginUser }) => {
   const navigate = useNavigate();
   const [user, setUser] = useState({
-    name: "",
+    email: "",
     password: "",
   });
   const handleChange = (e) => {
     const { name, value } = e.target;
     setUser({ ...user, [name]: value });
     console.log("user", user);
+  };
+  const login = () => {
+    const { email, password } = user;
+
+    axios.post("http://localhost:9003/login", user).then(
+      (res) => {
+        console.log(res);
+        setLoginUser(res.data.user);
+        localStorage.setItem("token", "we");
+        navigate("/home");
+      },
+      (err) => {
+        console.log(err);
+        alert(err);
+      }
+    );
   };
   return (
     <Box
@@ -42,12 +59,12 @@ export const Signin = () => {
       </Typography>
       <Grid item sx={6} md={6} mt={2}>
         <TextField
-          name="name"
-          label="User Name"
-          value={user.name}
+          name="email"
+          label="User email"
+          value={user.email}
           onChange={handleChange}
         >
-          Enter Name
+          Enter email
         </TextField>
       </Grid>
       <Grid item sx={6} md={6} mt={2}>
@@ -61,7 +78,7 @@ export const Signin = () => {
         </TextField>
       </Grid>
       <Grid item sx={6} md={6} mt={2}>
-        <Button>Login</Button>
+        <Button onClick={login}>Login</Button>
       </Grid>
       <Grid item sx={6} md={6} mt={2}>
         <Typography>New Account?</Typography>

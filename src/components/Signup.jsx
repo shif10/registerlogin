@@ -1,8 +1,10 @@
 import { Box, Button, Grid, TextField, Typography } from "@mui/material";
 import React, { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export const Signup = () => {
+  const navigate = useNavigate();
   const [user, setUser] = useState({
     name: "",
     password: "",
@@ -21,14 +23,17 @@ export const Signup = () => {
     if (name && email && password) {
       axios.post(`http://localhost:9003/register`, user).then(
         (res) => {
-          console.log("response is", res);
-          console.log(user);
+          navigate("/signin");
+          // console.log("response is", res);
+          // console.log("clicked");
+          alert("addds");
+
+          console.log("res", res);
         },
         (err) => {
-          console.log("error is", err);
+          alert(err?.response?.data?.error);
         }
       );
-      alert("added");
     } else {
       alert("invalid");
     }

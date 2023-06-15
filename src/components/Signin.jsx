@@ -21,10 +21,15 @@ export const Signin = ({ setLoginUser }) => {
 
     axios.post("http://localhost:9003/login", user).then(
       (res) => {
-        console.log(res);
-        setLoginUser(res.data.user);
-        localStorage.setItem("token", "we");
-        navigate("/home");
+        if (res.status === 200) {
+          console.log(res);
+          setLoginUser(res.data?.user);
+          console.log(res.data?.user.token);
+          localStorage.setItem("token", res.data?.user.token);
+          navigate("/home");
+        } else {
+          alert("somthing is wrong");
+        }
       },
       (err) => {
         console.log(err);

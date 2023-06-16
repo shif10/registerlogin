@@ -2,10 +2,11 @@ import React, { useState } from "react";
 import Grid from "@mui/material/Grid/Grid";
 import TextField from "@mui/material/TextField/TextField";
 import { Box, Button, Typography } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { json, useNavigate } from "react-router-dom";
 import axios from "axios";
-
+import Cookies from "universal-cookie";
 export const Signin = ({ setLoginUser }) => {
+  const cookie = new Cookies();
   const navigate = useNavigate();
   const [user, setUser] = useState({
     email: "",
@@ -16,19 +17,26 @@ export const Signin = ({ setLoginUser }) => {
     setUser({ ...user, [name]: value });
     console.log("user", user);
   };
+  console.log("user is", user);
   const login = () => {
     const { email, password } = user;
 
     axios.post("http://localhost:9003/login", user).then(
       (res) => {
         if (res.status === 200) {
-          console.log(res);
-          setLoginUser(res.data?.user);
-          console.log(res.data?.user.token);
-          localStorage.setItem("token", res.data?.user.token);
+          console.log("res", res);
+
+          localStorage.setItem("token", res.data?.user?.token);
+          localStorage.setItem(
+            "user",
+
+            JSON.stringify(res.data.user)
+          );
+
           navigate("/home");
         } else {
-          alert("somthing is wrong");
+          alert(res?.message);
+          navigate("/");
         }
       },
       (err) => {

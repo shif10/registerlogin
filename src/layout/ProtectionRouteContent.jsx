@@ -1,14 +1,11 @@
 import React from "react";
 
-import { ProtectedRoute } from "./ProtectedRoute";
-import Layout from ".";
+import { ProtectionRoute } from "./ProtectionRoute";
 
 export const ProtectionRouteContent = ({ Component }) => {
   return (
     <>
-      <Layout>
-        <ProtectedRoute Component={Component} />
-      </Layout>
+      <ProtectionRoute Component={Component} />
     </>
   );
 };

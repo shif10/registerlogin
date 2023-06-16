@@ -6,51 +6,50 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { Signup } from "./components/Signup";
 import { useState } from "react";
 import { ProtectionRoute } from "./layout/ProtectionRoute";
+import { ProtectionRouteContent } from "./layout/ProtectionRouteContent";
 
 function App() {
-  const [user, setLoginUser] = useState({});
-
   const token = localStorage.getItem("token");
+
+  const routes = [
+    {
+      route: "/home",
+      Component: Home,
+      isProtected: true,
+    },
+    {
+      route: "/",
+      Component: !token ? Signin : Home,
+    },
+    {
+      route: "/signin",
+      Component: !token ? Signin : Home,
+    },
+    {
+      route: "/signup",
+      Component: !token ? Signup : Home,
+    },
+  ];
 
   return (
     <>
       <BrowserRouter>
         <Routes>
-          <Route
-            exact
-            path="/"
-            element={
-              token ? (
-                <Home user={user} />
-              ) : (
-                <Signin setLoginUser={setLoginUser} />
-              )
-            }
-          ></Route>
-          <Route
-            exact
-            path="/signin"
-            element={
-              token ? (
-                <Home user={user} />
-              ) : (
-                <Signin setLoginUser={setLoginUser} />
-              )
-            }
-          ></Route>
-
-          <Route path="/signup" element={<Signup />}></Route>
-
-          <Route
-            path="/home"
-            element={
-              token ? (
-                <Home user={user} />
-              ) : (
-                <Signin setLoginUser={setLoginUser} />
-              )
-            }
-          ></Route>
+          {routes.map(({ route, Component, isProtected = false }) => {
+            return (
+              <Route
+                key={route}
+                path={route}
+                element={
+                  isProtected ? (
+                    <ProtectionRoute Component={Component}></ProtectionRoute>
+                  ) : (
+                    <Component />
+                  )
+                }
+              />
+            );
+          })}
         </Routes>
       </BrowserRouter>
       ;

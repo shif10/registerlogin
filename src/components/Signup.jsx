@@ -23,7 +23,8 @@ export const Signup = () => {
     if (name && email && password) {
       axios.post(`http://localhost:9003/register`, user).then(
         (res) => {
-          navigate("/signin");
+          navigate("/verifymail");
+          localStorage.setItem("userdata", JSON.stringify(res?.data?.user));
           // console.log("response is", res);
           // console.log("clicked");
           alert("addds");

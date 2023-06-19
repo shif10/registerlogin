@@ -7,9 +7,12 @@ export const Home = () => {
 
   const navigate = useNavigate();
   const [token, setToken] = useState("");
+  useEffect(() => {
+    // handlelogout();
+  }, []);
   const handlelogout = () => {
     localStorage.clear();
-    navigate("/");
+    navigate("/signin");
   };
   useEffect(() => {
     console.log("token is", token);

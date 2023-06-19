@@ -7,10 +7,11 @@ import { Signup } from "./components/Signup";
 import { useState } from "react";
 import { ProtectionRoute } from "./layout/ProtectionRoute";
 import { ProtectionRouteContent } from "./layout/ProtectionRouteContent";
+import { VerfifyMail } from "./components/VerfifyMail";
 
 function App() {
   const token = localStorage.getItem("token");
-
+  const userData = JSON.parse(localStorage.getItem("userdata"));
   const routes = [
     {
       route: "/home",
@@ -28,6 +29,10 @@ function App() {
     {
       route: "/signup",
       Component: !token ? Signup : Home,
+    },
+    {
+      route: "/verifymail",
+      Component: !token ? VerfifyMail : Home,
     },
   ];
 

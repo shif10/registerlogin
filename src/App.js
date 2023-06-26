@@ -8,10 +8,13 @@ import { useState } from "react";
 import { ProtectionRoute } from "./layout/ProtectionRoute";
 import { ProtectionRouteContent } from "./layout/ProtectionRouteContent";
 import { VerfifyMail } from "./components/VerfifyMail";
+import { Resetpassword } from "./components/Resetpassword";
+import { Resendmail } from "./components/Resendmail";
+import { ResetPasswordMail } from "./components/ResetPasswordMail";
 
 function App() {
   const token = localStorage.getItem("token");
-  const userData = JSON.parse(localStorage.getItem("userdata"));
+
   const routes = [
     {
       route: "/home",
@@ -31,8 +34,24 @@ function App() {
       Component: !token ? Signup : Home,
     },
     {
-      route: "/verifymail",
+      route: "varifymail/:id",
       Component: !token ? VerfifyMail : Home,
+    },
+    {
+      route: "varifymail",
+      Component: !token ? VerfifyMail : Signin,
+    },
+    {
+      route: "/resendmail",
+      Component: !token ? Resendmail : Signin,
+    },
+    {
+      route: "/resetpasswordMail",
+      Component: !token ? ResetPasswordMail : Signin,
+    },
+    {
+      route: "/resetpassword/:id",
+      Component: !token ? Resetpassword : Signin,
     },
   ];
 

@@ -19,31 +19,36 @@ export const Signin = ({ setLoginUser }) => {
   };
   console.log("user is", user);
   const login = () => {
-    const { email, password } = user;
+    const is_varified = localStorage.getItem("isvarified");
+    if (is_varified !== "true") {
+      alert("please varify your mail first");
+    } else {
+      const { email, password } = user;
 
-    axios.post("http://localhost:9003/login", user).then(
-      (res) => {
-        if (res.status === 200) {
-          console.log("res", res);
+      axios.post("http://localhost:9003/login", user).then(
+        (res) => {
+          if (res.status === 200) {
+            console.log("res", res);
 
-          localStorage.setItem("token", res.data?.user?.token);
-          localStorage.setItem(
-            "user",
+            localStorage.setItem("token", res.data?.user?.token);
+            localStorage.setItem(
+              "user",
 
-            JSON.stringify(res.data.user)
-          );
+              JSON.stringify(res?.data?.user)
+            );
 
-          navigate("/home");
-        } else {
-          alert(res?.message);
-          navigate("/");
+            navigate("/home");
+          } else {
+            alert(res?.message);
+            navigate("/");
+          }
+        },
+        (err) => {
+          console.log(err);
+          alert(err?.response?.data?.message);
         }
-      },
-      (err) => {
-        console.log(err);
-        alert(err);
-      }
-    );
+      );
+    }
   };
   return (
     <Box
@@ -94,9 +99,13 @@ export const Signin = ({ setLoginUser }) => {
         <Button onClick={login}>Login</Button>
       </Grid>
       <Grid item sx={6} md={6} mt={2}>
-        <Typography>New Account?</Typography>
+        New Account?
         <Button onClick={() => navigate("/signup")}>Register</Button>
       </Grid>
+      <Button onClick={() => navigate("/resetpasswordMail")}>
+        Forget password ?
+      </Button>
+      <Button onClick={() => navigate("/resendmail")}>Varify your mail</Button>
     </Box>
   );
 };

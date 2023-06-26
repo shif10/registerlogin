@@ -23,7 +23,7 @@ export const Signup = () => {
     if (name && email && password) {
       axios.post(`http://localhost:9003/register`, user).then(
         (res) => {
-          navigate("/verifymail");
+          navigate("/varifymail");
           localStorage.setItem("userdata", JSON.stringify(res?.data?.user));
           // console.log("response is", res);
           // console.log("clicked");
@@ -49,6 +49,7 @@ export const Signup = () => {
         alignItems={"center"}
         height={"100%"}
         boxShadow={(0, 0, "12px", "4px", "secondary")}
+        marginTop={"5rem"}
       >
         <Typography variant="h3" mb={4}>
           Sign Up
@@ -79,12 +80,21 @@ export const Signup = () => {
             label="Email"
             value={user.email}
             onChange={handleChange}
+            type="email"
           >
             Enter Email
           </TextField>
         </Grid>
-        <Grid item sx={6} md={6} mt={2}>
+        <Grid
+          item
+          sx={6}
+          md={6}
+          mt={2}
+          sx={{ display: "flex", flexDirection: "column" }}
+        >
           <Button onClick={register}>Register</Button>
+          <Typography>Already registered ?</Typography>
+          <Button onClick={() => navigate("/")}>Login</Button>
         </Grid>
       </Box>
     </>
